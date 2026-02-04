@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Save Contact</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" href="data:;base64,iVBORw0KGgo=">
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            text-align: center;
+            padding: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            margin: 0;
+        }
+        .container {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            max-width: 500px;
+            margin: 50px auto;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        h2 {
+            color: #333;
+            margin-bottom: 20px;
+        }
+        .btn {
+            background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            margin: 15px 0;
+            width: 100%;
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .instructions {
+            text-align: left;
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            border-left: 4px solid #007bff;
+        }
+        .ios-message {
+            background: #d4edda;
+            color: #155724;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .android-message {
+            background: #fff3cd;
+            color: #856404;
+            padding: 15px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>📇 Save Contact to Your Phone</h2>
+        
+        <div id="ios-section" style="display: none;">
+            <div class="ios-message">
+                <p><strong>For iPhone/iPad:</strong></p>
+                <p>You will be redirected automatically...</p>
+            </div>
+            <p id="ios-redirect">If nothing happens, <a href="#" id="ios-link">tap here to download contact</a></p>
+        </div>
+        
+        <div id="android-section" style="display: none;">
+            <div class="android-message">
+                <p><strong>For Android:</strong></p>
+                <p>Downloading contact file...</p>
+            </div>
+            
+            <div class="instructions">
+                <h3>Follow these steps:</h3>
+                <ol>
+                    <li>File "contact.vcf" has been downloaded</li>
+                    <li>Open your <strong>Files</strong> or <strong>Downloads</strong> app</li>
+                    <li>Find and tap "contact.vcf"</li>
+                    <li>Select <strong>"Add to contacts"</strong></li>
+                </ol>
+            </div>
+            
+            <button class="btn" id="android-btn">Download Contact Again</button>
+        </div>
+        
+        <p style="color: #666; margin-top: 30px; font-size: 14px;">
+            <strong>Note:</strong> Some Android devices may require you to open the .vcf file manually from your downloads folder.
+        </p>
+    </div>
+
+    <script>
+        // IMPORTANTE: CAMBIA ESTA URL POR LA DE TU ARCHIVO .VCF
+        const vcfUrl = 'https://raw.githubusercontent.com/Aitoronja/Advisent-VCF/refs/heads/main/John%20Czechowicz.vcf';
+        
+        // Detect device
+        function isIOS() {
+            return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
+        }
+        
+        function isAndroid() {
+            return /Android/.test(navigator.userAgent);
+        }
+        
+        function downloadContact() {
+            // Method 1: Direct redirect (works best for iOS)
+            window.location.href = vcfUrl;
+            
+            // Method 2: Create download link (for Android)
+            setTimeout(function() {
+                const link = document.createElement('a');
+                link.href = vcfUrl;
+                link.download = 'contact.vcf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            }, 100);
+        }
+        
+        // On page load
+        window.onload = function() {
+            const iosSection = document.getElementById('ios-section');
+            const androidSection = document.getElementById('android-section');
+            const iosLink = document.getElementById('ios-link');
+            const androidBtn = document.getElementById('android-btn');
+            
+            // Set the download link
+            iosLink.href = vcfUrl;
+            
+            // Set button events
+            iosLink.onclick = downloadContact;
+            androidBtn.onclick = downloadContact;
+            
+            // Show appropriate section
+            if (isIOS()) {
+                iosSection.style.display = 'block';
+                // Auto-download for iOS after 1 second
+                setTimeout(downloadContact, 1000);
+            } else if (isAndroid()) {
+                androidSection.style.display = 'block';
+                // Auto-download for Android immediately
+                downloadContact();
+            } else {
+                // Desktop or other device
+                iosSection.style.display = 'block';
+                iosSection.innerHTML = '<p><strong>Please scan this QR code with your phone</strong></p>' +
+                                      '<p>Or <a href="' + vcfUrl + '">click here to download the contact file</a></p>';
+            }
+        };
+    </script>
+</body>
+</html>      
