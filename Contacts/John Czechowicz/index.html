@@ -5,12 +5,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-        
+        * { margin: 0; padding: 0; box-sizing: border-box; }
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
@@ -20,20 +15,17 @@
             align-items: center;
             padding: 20px;
         }
-        
         .container {
             background: white;
             border-radius: 20px;
-            padding: 40px;
+            padding: 30px;
             width: 100%;
             max-width: 500px;
             text-align: center;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        
         .avatar {
-            width: 80px;
-            height: 80px;
+            width: 80px; height: 80px;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border-radius: 50%;
             margin: 0 auto 20px;
@@ -44,254 +36,155 @@
             font-size: 32px;
             font-weight: bold;
         }
-        
-        h1 {
-            color: #333;
-            margin-bottom: 10px;
-            font-size: 24px;
-        }
-        
-        .subtitle {
-            color: #666;
-            margin-bottom: 30px;
-        }
-        
+        h1 { color: #333; margin-bottom: 10px; font-size: 24px; }
+        .subtitle { color: #666; margin-bottom: 30px; }
         .btn {
             background: linear-gradient(135deg, #007bff 0%, #0056b3 100%);
-            color: white;
-            border: none;
-            padding: 16px 32px;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            width: 100%;
-            margin: 10px 0;
+            color: white; border: none; padding: 16px 32px;
+            border-radius: 10px; font-size: 18px; font-weight: 600;
+            cursor: pointer; width: 100%; margin: 15px 0;
             transition: transform 0.2s;
         }
-        
-        .btn:hover {
-            transform: translateY(-2px);
+        .btn:hover { transform: translateY(-2px); }
+        .btn-secondary { background: #6c757d; }
+        .message {
+            padding: 15px; border-radius: 10px; margin: 15px 0;
         }
-        
-        .btn-secondary {
-            background: #6c757d;
-        }
-        
-        .instructions {
-            background: #f8f9fa;
-            padding: 20px;
-            border-radius: 10px;
-            text-align: left;
-            margin: 20px 0;
-            display: none;
-        }
-        
-        .instructions h3 {
-            color: #333;
-            margin-bottom: 10px;
-        }
-        
-        .device-specific {
-            display: none;
-            padding: 15px;
-            border-radius: 10px;
-            margin: 15px 0;
-        }
-        
-        .ios-message {
-            background: #d4edda;
-            color: #155724;
-            border: 1px solid #c3e6cb;
-        }
-        
-        .android-message {
-            background: #fff3cd;
-            color: #856404;
-            border: 1px solid #ffeaa7;
-            text-align: left;
-        }
-        
-        .auto-download {
-            background: #e7f3ff;
-            color: #004085;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 10px 0;
-        }
+        .success { background: #d4edda; color: #155724; }
+        .info { background: #d1ecf1; color: #0c5460; }
+        .warning { background: #fff3cd; color: #856404; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div class="avatar" id="avatar">J</div>
-        <h1 id="contactName">John Smith</h1>
-        <div class="subtitle" id="contactTitle">Sales Manager at ABC Company</div>
+        <div class="avatar">J</div>
+        <h1>John Smith</h1>
+        <div class="subtitle">Sales Manager at ABC Company</div>
         
-        <!-- iOS Message (shown only on iOS) -->
-        <div id="iosMessage" class="device-specific ios-message">
-            <strong>For iPhone:</strong> Contact will be added automatically...
+        <div id="message" class="message info">
+            Loading contact information...
         </div>
         
-        <!-- Android Message (shown only on Android) -->
-        <div id="androidMessage" class="device-specific android-message">
-            <strong>For Android:</strong>
-            <div class="auto-download">Downloading contact file...</div>
-            <p><strong>Next steps:</strong></p>
-            <ol style="padding-left: 20px; margin-top: 10px;">
-                <li>Open your <strong>Files</strong> or <strong>Downloads</strong> app</li>
-                <li>Find "contact.vcf" file</li>
-                <li>Tap the file and select "Add to contacts"</li>
-            </ol>
-        </div>
-        
-        <!-- Main Download Button -->
-        <button class="btn" onclick="downloadContact()" id="mainBtn">
-            📥 Download Contact Now
+        <button class="btn" onclick="downloadContact()" id="downloadBtn">
+            📥 Download Contact
         </button>
         
-        <!-- Instructions Button -->
         <button class="btn btn-secondary" onclick="toggleInstructions()">
-            📋 View Detailed Instructions
+            📋 View Instructions
         </button>
         
-        <!-- Detailed Instructions (hidden by default) -->
-        <div id="detailedInstructions" class="instructions">
-            <h3>How to Save This Contact</h3>
-            
-            <div style="margin-bottom: 15px;">
-                <h4>📱 For iPhone/iPad:</h4>
-                <p>Simply tap "Download Contact Now". Your iPhone will automatically prompt you to add the contact to your address book.</p>
-            </div>
-            
-            <div>
-                <h4>🤖 For Android:</h4>
-                <ol style="padding-left: 20px;">
-                    <li>Tap "Download Contact Now"</li>
-                    <li>Wait for the download to complete</li>
-                    <li>Open your device's <strong>File Manager</strong> or <strong>Downloads</strong> folder</li>
-                    <li>Locate the file named <strong>"contact.vcf"</strong></li>
-                    <li>Tap the file - your phone will open it with the Contacts app</li>
-                    <li>Select <strong>"Save to contacts"</strong> or <strong>"Import"</strong></li>
-                    <li>Review the information and confirm</li>
+        <div id="instructions" style="display: none; margin-top: 20px; text-align: left;">
+            <div class="message warning">
+                <h3>📱 For iPhone/iPad:</h3>
+                <p>Tap "Download Contact". Your iPhone will automatically ask to add the contact.</p>
+                
+                <h3>🤖 For Android:</h3>
+                <ol>
+                    <li>Tap "Download Contact"</li>
+                    <li>Open your <strong>Files</strong> or <strong>Downloads</strong> app</li>
+                    <li>Find "contact.vcf" and tap it</li>
+                    <li>Select <strong>"Add to contacts"</strong></li>
                 </ol>
-                <p style="margin-top: 10px; color: #666; font-size: 14px;">
-                    <em>Note: Some Android devices may open the file automatically after download.</em>
-                </p>
-            </div>
-            
-            <div style="margin-top: 15px; padding-top: 15px; border-top: 1px solid #ddd;">
-                <h4>❓ Having Trouble?</h4>
-                <p>If the contact doesn't save automatically:</p>
-                <ul style="padding-left: 20px;">
-                    <li>Make sure you have permission to save contacts</li>
-                    <li>Try opening the .vcf file from your downloads folder</li>
-                    <li>Restart the process</li>
-                </ul>
             </div>
         </div>
-        
-        <p style="color: #666; margin-top: 20px; font-size: 14px;">
-            <strong>Compatible with:</strong> iOS 10+, Android 6+, and most modern smartphones
-        </p>
     </div>
 
     <script>
-        // === CONFIGURATION - CHANGE THESE ===
-        const contactData = {
-            name: "John Czechowicz",
-            title: "Partner, Tax Manager at Advisent",
-            initials: "JC",
-            vcfFile: "john-czechowicz.vcf"  // Name of your .vcf file in the same folder
-        };
-        // === END CONFIGURATION ===
+        // === ¡IMPORTANTE! CAMBIA ESTA URL ===
+        // Pega aquí la URL RAW de tu archivo .vcf
+        // (la que obtuviste en el Paso 1)
+        const VCF_URL = 'https://raw.githubusercontent.com/Aitoronja/Advisent-VCF/refs/heads/main/Contacts/John%20Czechowicz/John-Czechowicz.vcf';
+        // === FIN DE CONFIGURACIÓN ===
         
-        // Set contact info on page
-        document.getElementById('avatar').textContent = contactData.initials;
-        document.getElementById('contactName').textContent = contactData.name;
-        document.getElementById('contactTitle').textContent = contactData.title;
+        // Elementos del DOM
+        const messageEl = document.getElementById('message');
+        const downloadBtn = document.getElementById('downloadBtn');
+        const instructionsEl = document.getElementById('instructions');
         
-        // Device detection
+        // Detectar dispositivo
         function isIOS() {
             return /iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream;
         }
         
-        function isAndroid() {
-            return /Android/.test(navigator.userAgent);
+        // Mostrar mensaje
+        function showMessage(text, type = 'info') {
+            messageEl.textContent = text;
+            messageEl.className = 'message ' + type;
         }
         
-        // Download function - optimized for all devices
+        // Función de descarga MEJORADA
         function downloadContact() {
-            const vcfUrl = contactData.vcfFile;
+            showMessage('Downloading contact...', 'info');
             
-            // Method 1: Direct navigation (best for iOS)
+            // Método 1: Para iOS - redirección directa
             if (isIOS()) {
-                window.location.href = vcfUrl;
+                window.location.href = VCF_URL;
+                setTimeout(() => {
+                    showMessage('Contact downloaded. Check your Contacts app.', 'success');
+                }, 1000);
                 return;
             }
             
-            // Method 2: Create download link (best for Android and others)
+            // Método 2: Para otros dispositivos - crear enlace de descarga
             const link = document.createElement('a');
-            link.href = vcfUrl;
-            link.download = 'contact.vcf';
+            link.href = VCF_URL;
+            link.target = '_blank';  // Abrir en nueva pestaña
+            link.rel = 'noopener noreferrer';
             
-            // iOS doesn't like the download attribute, so only add it for non-iOS
-            if (!isIOS()) {
-                link.setAttribute('download', 'contact.vcf');
+            // Intentar forzar descarga
+            try {
+                link.download = 'contact.vcf';
+            } catch (e) {
+                // Si falla el atributo download, solo usar href
             }
             
+            // Añadir al documento, hacer clic y remover
             document.body.appendChild(link);
             link.click();
             document.body.removeChild(link);
             
-            // Show Android instructions after download
-            if (isAndroid()) {
-                showAndroidInstructions();
-            }
+            // Mensaje de éxito
+            setTimeout(() => {
+                if (isIOS()) {
+                    showMessage('Contact added to your iPhone!', 'success');
+                } else {
+                    showMessage('Contact downloaded. Open the .vcf file from your Downloads.', 'success');
+                    // Mostrar instrucciones automáticamente en Android
+                    instructionsEl.style.display = 'block';
+                }
+            }, 1500);
         }
         
-        // Show device-specific instructions on page load
-        function showDeviceInstructions() {
-            if (isIOS()) {
-                document.getElementById('iosMessage').style.display = 'block';
-                // Change button text for iOS
-                document.getElementById('mainBtn').textContent = '📥 Add to Contacts';
-                
-                // Auto-download for iOS after 3 seconds
-                setTimeout(() => {
-                    document.getElementById('iosMessage').innerHTML = 
-                        '<strong>For iPhone:</strong> Adding contact...';
-                    setTimeout(downloadContact, 1000);
-                }, 3000);
-            } 
-            else if (isAndroid()) {
-                document.getElementById('androidMessage').style.display = 'block';
-                // Auto-download for Android immediately
-                setTimeout(downloadContact, 500);
-            }
-        }
-        
-        // Show Android instructions
-        function showAndroidInstructions() {
-            document.getElementById('androidMessage').style.display = 'block';
-        }
-        
-        // Toggle detailed instructions
+        // Mostrar/ocultar instrucciones
         function toggleInstructions() {
-            const instructions = document.getElementById('detailedInstructions');
-            instructions.style.display = instructions.style.display === 'block' ? 'none' : 'block';
+            instructionsEl.style.display = instructionsEl.style.display === 'block' ? 'none' : 'block';
         }
         
-        // On page load
+        // Auto-descarga después de 3 segundos (solo iOS)
         window.onload = function() {
-            showDeviceInstructions();
-            
-            // Auto-show instructions on Android (they need it more)
-            if (isAndroid()) {
+            if (isIOS()) {
+                showMessage('iPhone detected. Auto-downloading in 3 seconds...', 'info');
+                downloadBtn.textContent = '📱 Add to Contacts';
+                
                 setTimeout(() => {
-                    document.getElementById('detailedInstructions').style.display = 'block';
-                }, 2000);
+                    downloadContact();
+                }, 3000);
+            } else {
+                showMessage('Ready to download contact', 'info');
             }
         };
+        
+        // Verificar que la URL del VCF sea accesible
+        fetch(VCF_URL, { method: 'HEAD', mode: 'no-cors' })
+            .then(() => {
+                showMessage('Contact ready to download', 'success');
+            })
+            .catch(() => {
+                showMessage('Warning: Contact file might not be accessible', 'warning');
+                downloadBtn.style.background = 'linear-gradient(135deg, #dc3545 0%, #c82333 100%)';
+            });
     </script>
+</body>
+</html>
 </body>
 </html>
